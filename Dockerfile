@@ -35,7 +35,7 @@ RUN mkdir -p /app/{api,projects,scripts,configs,logs}
 WORKDIR /app/api
 
 # Copy API files
-COPY ./api/requirements.txt .
+COPY ./api/src/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy all other files
