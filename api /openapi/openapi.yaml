@@ -1,1 +1,89 @@
-
+openapi: 3.0.0
+info:
+  title: Development Server API
+  description: API for managing development environments and projects
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://dev-server-render.onrender.com
+    description: Production server
+paths:
+  /projects/:
+    post:
+      summary: Create a new project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '201':
+          description: Project created successfully
+  /projects/{project_name}/execute:
+    post:
+      summary: Execute a command in project directory
+      parameters:
+        - name: project_name
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Command'
+      responses:
+        '200':
+          description: Command executed successfully
+  /projects/{project_name}/dependencies:
+    get:
+      summary: Get project dependencies
+      parameters:
+        - name: project_name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dependencies retrieved successfully
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        name:
+          type: string
+        language:
+          type: string
+        dependencies:
+          type: array
+          items:
+            type: string
+    Command:
+      type: object
+      properties:
+        command:
+          type: string
+        working_dir:
+          type: string
+    Process:
+      type: object
+      properties:
+        pid:
+          type: integer
+        command:
+          type: string
+        status:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
