@@ -7,3 +7,5 @@ class Environment(BaseModel):
     type: str  # python, nodejs, java, etc.
     config: Dict = {}
     active: bool = False
+    created_at: Optional[str] = None
+    updated_at: Optional[str] = None
