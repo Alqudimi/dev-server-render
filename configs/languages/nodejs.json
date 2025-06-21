@@ -1,1 +1,13 @@
-
+{
+    "versions": ["14.x", "16.x", "17.x"],
+    "package_managers": ["npm", "yarn", "pnpm"],
+    "default_packages": [],
+    "environment_manager": "nvm",
+    "build_tools": ["webpack", "vite", "rollup"],
+    "common_commands": {
+        "install": "npm install",
+        "start": "npm start",
+        "test": "npm test",
+        "build": "npm run build"
+    }
+}
