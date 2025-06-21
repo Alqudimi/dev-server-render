@@ -17,6 +17,8 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc"
 )
+start_monitoring()
+asyncio.create_task(update_system_metrics())
 
 # CORS Configuration
 app.add_middleware(
@@ -107,7 +109,19 @@ async def execute_command(project_name: str, cmd: Command, token: str = Depends(
             status_code=500,
             detail=str(e)
         )
-
+@app.websocket("/ws/terminal/{project_name}")
+async def websocket_terminal(websocket: WebSocket, project_name: str):
+    terminal = TerminalWebSocket(websocket)
+    await terminal.connect()
+    try:
+        await asyncio.gather(
+            terminal.receive_commands(),
+            terminal.send_output()
+        )
+    except Exception as e:
+        logger.error(f"WebSocket error: {str(e)}")
+    finally:
+        await terminal.disconnect()
 @app.get("/projects/{project_name}/dependencies")
 async def get_dependencies(project_name: str, token: str = Depends(oauth2_scheme)):
     """Get project dependencies based on language"""
