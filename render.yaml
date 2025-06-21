@@ -1,1 +1,28 @@
+services:
+  - type: web
+    name: dev-server
+    runtime: docker
+    dockerfilePath: Dockerfile
+    env: docker
+    port: 8000
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+    autoDeploy: true
+    scaling:
+      instances: 2
+      memory: 2GB
+      cpu: 2
 
+  - type: postgres
+    name: dev-server-db
+    plan: free
+    databaseName: devserver
+    user: user
+    password: pass
+
+  - type: redis
+    name: dev-server-redis
+    plan: free
