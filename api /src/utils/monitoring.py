@@ -1,5 +1,6 @@
 from prometheus_client import start_http_server, Counter, Gauge, Histogram
-import time
+import psutil
+import asyncio
 
 # Metrics definitions
 API_REQUESTS = Counter(
@@ -33,7 +34,7 @@ def start_monitoring(port=8001):
     """Start Prometheus metrics server"""
     start_http_server(port)
     
-def update_system_metrics():
+async def update_system_metrics():
     """Update system metrics periodically"""
     while True:
         # Get CPU usage
@@ -44,4 +45,4 @@ def update_system_metrics():
         mem = psutil.virtual_memory()
         SYSTEM_MEMORY_USAGE.set(mem.percent)
         
-        time.sleep(5)
+        await asyncio.sleep(5)
