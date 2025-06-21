@@ -1,1 +1,7 @@
-
+{
+    "versions": ["3.8", "3.9", "3.10"],
+    "package_managers": ["pip", "pipenv", "poetry"],
+    "default_packages": ["pip", "setuptools", "wheel"],
+    "environment_manager": "venv",
+    "build_tools": ["setuptools", "flit", "hatch"]
+}
