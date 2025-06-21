@@ -1,0 +1,13 @@
+{
+    "versions": ["11", "17"],
+    "package_managers": ["maven", "gradle"],
+    "default_packages": [],
+    "environment_manager": "jenv",
+    "build_tools": ["maven", "gradle"],
+    "common_commands": {
+        "compile": "mvn compile",
+        "test": "mvn test",
+        "package": "mvn package",
+        "run": "mvn spring-boot:run"
+    }
+}
